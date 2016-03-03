@@ -1,0 +1,36 @@
+.col-sm-8
+  p
+    | 苫小牧高専のニュースをTwitterやメールでお知らせします。
+
+  h3
+    | Twitter Bot
+  p
+    a href="https://twitter.com/TmNCT_News" target="_blank"
+      | @TmNCT_News
+    | をフォロー。
+
+  h3
+    | メール配信
+  p
+    | メールアドレスを入力して登録。
+
+  form.form-horizontal action=url("/subscribe") method="POST"
+    .form-group
+      label.control-label.col-sm-1 for="email"
+        | Email
+      .col-sm-11
+        input#email.form-control name="email" type="email" placeholder="example@example.com"
+    .form-group
+      .col-sm-offset-1.col-sm-11
+        input.btn.btn-default.btn-primary type="submit"
+
+    a.pull-right href=url("/unsubscribe")
+      | 配信停止はコチラ
+
+.col-sm-4.hidden-xs
+  a.twitter-timeline data-dnt="true" data-widget-id="708568790448021504" href="https://twitter.com/TmNCT_News"  @TmNCT_Newsさんのツイート
+
+javascript:
+  !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+  !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+

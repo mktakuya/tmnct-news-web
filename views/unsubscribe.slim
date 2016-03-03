@@ -1,0 +1,17 @@
+.col-sm-12
+  p
+    | 配信を解除するメールアドレスを入力してください。
+
+  form.form-horizontal action=url("/unsubscribe") method="POST"
+    .form-group
+      label.control-label.col-sm-1 for="email"
+        | Email
+      .col-sm-11
+        input#email.form-control name="email" type="email" placeholder="example@example.com"
+    .form-group
+      .col-sm-offset-1.col-sm-11
+        input.btn.btn-default.btn-primary type="submit"
+
+    a.pull-right href=url("/")
+      | TOPに戻る
+
