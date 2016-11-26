@@ -9,6 +9,8 @@ gem "slim"
 gem "pg"
 gem "sequel"
 
+gem "twilio-ruby"
+
 group :production do
   gem "puma"
 end
