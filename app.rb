@@ -87,7 +87,7 @@ class TmNCTNewsWeb < Sinatra::Base
     Twilio::TwiML::Response.new do |r|
       r.Say '苫小牧高専ニュース', { language: 'ja-JP', voice: 'alice' }
       r.Pause length: '1'
-      r.Say params[:title], { language: 'ja-JP', voice: 'alice' }
+      r.Say URI.unescape(params[:title]), { language: 'ja-JP', voice: 'alice' }
     end.text
   end
 
