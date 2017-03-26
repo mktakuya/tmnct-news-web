@@ -97,4 +97,6 @@ class TmNCTNewsWeb < Sinatra::Base
       @title ? "#{@title} - 苫小牧高専News" : "苫小牧高専News"
     end
   end
+
+  run! if app_file == $0
 end
