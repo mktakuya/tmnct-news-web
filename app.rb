@@ -21,21 +21,21 @@ class TmNCTNewsWeb < Sinatra::Base
   before do
     if ENV['DATABASE_URL'].nil?
       connect_opt = YAML.load_file("./db.yml")
-      DB = Sequel.postgres('tmnct-news-subscribers', connect_opt)
+      @db = Sequel.postgres('tmnct-news-subscribers', connect_opt)
     else
-      DB = Sequel.connect(ENV['DATABASE_URL'])
+      @db = Sequel.connect(ENV['DATABASE_URL'])
     end
 
-    unless DB.table_exists?(:subscribers)
-      DB.create_table :subscribers do
+    unless @db.table_exists?(:subscribers)
+      @db.create_table :subscribers do
         String :email, primary_key: true
       end
     end
   end
 
   after do
-    if defined?(DB)
-      DB.disconnect
+    if defined?(@db)
+      @db.disconnect
     end
   end
 
@@ -48,8 +48,8 @@ class TmNCTNewsWeb < Sinatra::Base
       @error = "不正なメールアドレスです"
       slim :index
     else
-      if DB[:subscribers].where(email: request["email"]).first.nil?
-        DB.transaction { DB[:subscribers].insert(request["email"]) }
+      if @db[:subscribers].where(email: request["email"]).first.nil?
+        @db.transaction { @db[:subscribers].insert(request["email"]) }
         @title = "登録完了"
         slim :subscribe
       else
@@ -70,12 +70,12 @@ class TmNCTNewsWeb < Sinatra::Base
       @error = "不正なメールアドレスです"
       slim :unsubscribe
     else
-      if DB[:subscribers].where(email: request["email"]).first.nil?
+      if @db[:subscribers].where(email: request["email"]).first.nil?
         @title = "配信解除"
         @error = "このメールアドレスは登録されていません。"
         slim :unsubscribe
       else
-        DB.transaction { DB[:subscribers].where(email: request["email"]).delete }
+        @db.transaction { @db[:subscribers].where(email: request["email"]).delete }
         @message = "配信解除が完了しました。"
         slim :index
       end
