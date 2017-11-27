@@ -11,6 +11,7 @@ gem "sequel"
 
 gem "twilio-ruby"
 
+gem 'nokogiri'
 gem 'pdfkit'
 gem 'wkhtmltopdf'
 
