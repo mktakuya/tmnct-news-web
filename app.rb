@@ -4,6 +4,11 @@ require "sinatra/reloader"
 require 'slim'
 require 'sequel'
 require 'twilio-ruby'
+require 'open-uri'
+require 'nokogiri'
+require 'pdfkit'
+require 'erb'
+#require 'wkhtmltopdf'
 
 class TmNCTNewsWeb < Sinatra::Base
   register Sinatra::Contrib
@@ -89,6 +94,20 @@ class TmNCTNewsWeb < Sinatra::Base
       r.Pause length: '1'
       r.Say URI.unescape(params[:title]), { language: 'ja-JP', voice: 'alice' }
     end.text
+  end
+
+  get '/fax' do
+    path = "#{params[:category]}/#{params[:post_id]}.html"
+    url = "http://www.tomakomai-ct.ac.jp/#{path}"
+    doc = Nokogiri::HTML(open(url))
+    title = doc.title
+    post = doc.search('.post.clearfix')[0].to_html
+    erb = ERB.new(File.read(Dir.pwd + '/views/fax.html.erb'))
+    html = erb.result(binding)
+
+    pdf = PDFKit.new(html, encoding: 'UTF-8')
+    content_type 'application/pdf'
+    pdf.to_pdf
   end
 
   helpers do
