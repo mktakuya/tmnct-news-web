@@ -11,6 +11,9 @@ gem "sequel"
 
 gem "twilio-ruby"
 
+gem 'pdfkit'
+gem 'wkhtmltopdf'
+
 group :production do
   gem "puma"
 end
