@@ -14,6 +14,7 @@ gem "twilio-ruby"
 gem 'nokogiri'
 gem 'pdfkit'
 gem 'wkhtmltopdf'
+gem 'wkhtmltopdf-binary'
 
 group :production do
   gem "puma"
